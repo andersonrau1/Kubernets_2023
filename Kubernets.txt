@@ -1,1 +1,45 @@
-Cri cri cri cri 
+Container Engine
+    O Container Engine é o responsável por gerenciar as imagens e os volumes! 
+    O Docker é o Container Engine mais popular e utiliza como Container Runtime o containerd
+
+Container Runtime
+    O Container Runtime é o responsável por executar os container nos nós. Quando o docker é executado o seu Container Engine está usando algum Container Runtime
+
+    Existem três tipos de Container Runtime:
+        Low level: São os executados diretamente pelo kernel. Ex: runc, crun e runsc.
+        High level: São os executados por um Container Engine. Ex: containerd, CRI-O e o Podman.
+        Sandbox: são executados por um Container Engine e são responsáveis por executar containers de forma segura em unikernels ou usando um proxy para comunicar.
+        Virtualized: são executados por Container Engines e executam de forma segura em maquinas virtuais. A perfomance é um pouco menor neste caso.
+
+Arquitetura do Kubernets
+    O k8s segue um modelo plane/workers, onde é recomendado no minimo três nós: o control-plane e dois workers.
+  
+    API Server: Fornece uma API que utliza JSON sobre HTTP para comunicação, é utilizado principalmente pelo kubectl, as comunicações são do tipo REST
+    ETCD: é um datastore de chave-valor distribuido, utilizado para armarzenar espeficificações,status e configurações do cluster. Por padrão é usado somente nos control planes.
+    Scheduler: Responsável por selecionar o nó que irá hospedar um determinado POD. A escolha é feita baseando-se na quantidade de recursos disponiveis.
+    Controller Manager: É quem garante que o cluster esteja no último estado definido pelo etcd.
+    Kubelet: é o agente do K8s executado nos workers. Ele de fato é quem gerencia os PODS que estão dentros dos nós.
+    Kube-proxy: Age como um proxy e load balancer. Ele faz o roteamento das requisições para os pods e também cuida da rede do nó.
+
+Portas:
+    Kubernets API server: 6443 TCP - pode ser configurada.
+    etcd server client API: 2379 - 2380 TCP
+    kubelet API: 10250 TCP
+    kube-scheduler: 10251 TCP
+    kube-controller-manager: 10252 TCP
+    node port: 30000 - 32767 TCP
+
+POD:
+O menor objeto do K8s. O K8s não trabalha diretamente com containeres, ele organiza dentro dos pods que são abstrações que dividem os mesmos recursos.
+Um pod pode possuir varios containeres.
+
+Deployment:
+É um dos principais controllers utilizados. O Deployment e o ReplicaSet garantem um números de replícas de um pod estejam em execução.
+Ele também gerencia o ciclo de vida das aplicações, as caracteristicas são colocadas em um arquivo yaml e passadas para o kubectl executar o deploy.
+
+ReplicaSet:
+Responsável por garantir a quantidade de pods em execução no nó.
+
+Services: É a forma de você expor a comunicação através de um ClusterIP, NodePort ou LoadBalancer para distribuição das requisições entre os pods.
+Funciona como um balanceador de carga.
+
