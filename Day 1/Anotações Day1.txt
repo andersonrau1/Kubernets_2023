@@ -1,5 +1,6 @@
 Container Engine
     O Container Engine é o responsável por gerenciar as imagens e os volumes! 
+    Possibilita administrar de forma muito mais fácil
     O Docker é o Container Engine mais popular e utiliza como Container Runtime o containerd
 
 Container Runtime

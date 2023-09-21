@@ -1,0 +1,43 @@
+POD:
+Um pod é a menor unidade dentro do k8s.
+O k8s conversa com o pod, ele pode ser um grupamento de vários containeres utilizando a mesma rede, namespace e etc.
+Os pods se conversam através do IP, se um container está no mesmo pod eles conversam pelo localhost.
+
+kubectl get pods -A (Mostra todos os pods independente do namespace)
+kubectl get pods -n [namespace]  (Mostra os pods de um namespace especifico)
+kubectl describe pods [nome do pod] (Mostra as informações sobre um pod especifico)
+kubectl get pods [nome do pod] -o yaml (Mostra o yaml utilizado na criação do pod com todas informações)
+kubectl get pods -o wide (mostra mais informações sobre os pods como o node em que ele roda e o IP)
+kubectl delete pods [nome do pod] (deleta um pod)
+
+Criar um pod com a imagem do nginx na porta 80
+kubectl run [nome do pod] --image nginx --port 80
+
+Quando um pod é criado não conseguimos ter acessso nele via IP, é possível fazer um kubectl get pods -o wide para saber o IP do Pod.
+Mas ao tentar utilizar não existe comunicação, podemos então criar um POD que vai conseguir rodar comandos neste POD, como por exemplo:
+kubectl run -ti [nome do pod] --image alpine 
+Dentro do alpine instalar o curl : apk add curl
+E ai sim podemos fazer um curl no IP do primeiro POD e receberemos a mensagem de bem vindo do nginx 
+
+Como conectar em um pod via shell?
+Temos duas opções, a primeira é via attach
+
+kubectl attach [nome do pod] -c [nome do container] -ti
+ex: kubectl attach girus -c girus -ti
+
+Toda vez que é realizada uma conexão o Pod é reiniciado e perde os comandos rodados antes pois não temos ainda volumes configurados para salvar as infos.
+
+Se utilizarmos o attach no nginx conseguiremos conectar mas não faremos nada pois estaremos conectados no processo do ngninx e não em algum terminal
+Para esse tipo de conexão utilizados o exec.
+
+kubectl exec -ti [nome do pod] -- bash
+
+Agora sim conectamos no terminal do container, podemos também executar um comando no container sem entrar nele:
+
+kubectl exec [nome do pod] -- [comando para rodar]
+ex: kubectl exec strigus -- cat /usr/share/nginx/html/index.html
+
+Por default os PODS podem se conectar entre eles sem nenhuma restrição!
+
+
+
