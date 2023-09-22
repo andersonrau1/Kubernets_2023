@@ -39,5 +39,9 @@ ex: kubectl exec strigus -- cat /usr/share/nginx/html/index.html
 
 Por default os PODS podem se conectar entre eles sem nenhuma restrição!
 
+kubectl apply -f pod.yaml (kubectl create funciona somente para criar, o apply cria se não existir e atualiza se já existe o POD)
+
+kubectl get logs -f (pega os logs)
+
 
 
