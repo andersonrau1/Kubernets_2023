@@ -44,4 +44,6 @@ kubectl apply -f pod.yaml (kubectl create funciona somente para criar, o apply c
 kubectl get logs -f (pega os logs)
 
 
-
+Volumes:
+São usados para salvar informações dos Pods, todos containeres dentro do Pod tem acesso ao volume.
+Se o pod sofrer um restart as informações salvas no volume continuam disponiveis, se o Pod for removido o volume é excluido.

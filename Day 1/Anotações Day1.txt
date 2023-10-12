@@ -44,3 +44,12 @@ Responsável por garantir a quantidade de pods em execução no nó.
 Services: É a forma de você expor a comunicação através de um ClusterIP, NodePort ou LoadBalancer para distribuição das requisições entre os pods.
 Funciona como um balanceador de carga.
 
+
+
+Criar um cluster com kind:
+
+kind create cluster --config meu_primeiro_cluster.yaml
+
+
+
+kubectl get namespaces -n kube-system  - verifica os pods que fazem parte do Core do K8s
